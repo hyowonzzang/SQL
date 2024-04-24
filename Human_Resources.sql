@@ -90,4 +90,35 @@ where lower(first_name) like '___am%';
 
 select first_name, salary
 from employees
-where lower(first_name) like '_am%';
+where first_name like '_a__';
+
+-- 부서 ID가 90인 사원 중, 급여가 20000 이상인 사원이름 , 급여
+select first_name,salary
+from employees
+where department_id = 90 and salary >=20000;
+
+select first_name,salary
+from employees
+where department_id in (90) and salary >=20000;
+
+-- 입사일이 11/01/01~ 17/12/31 구간에 있는 사원의 목록
+select first_name,hire_date
+from employees
+where hire_date >='11/01/01' and hire_date <= '17/12/31';
+
+select first_name,hire_date
+from employees
+where hire_date between '11/01/01' and '17/12/31';
+
+-- mannager_id가 100, 120, 147인 사원의 명단, manager_id
+select first_name, manager_id
+from employees
+where manager_id = 100 or manager_id = 120 or manager_id = 147;
+
+select first_name, manager_id
+from employees
+where manager_id in (100,120,147);
+
+-- 1. 비교 연산자+논리 연산자의 조합
+-- 2. in 연산자 이용
+-- 두 쿼리를 비교
