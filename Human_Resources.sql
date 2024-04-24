@@ -111,14 +111,36 @@ from employees
 where hire_date between '11/01/01' and '17/12/31';
 
 -- mannager_id가 100, 120, 147인 사원의 명단, manager_id
+-- 1. 비교 연산자+논리 연산자의 조합
 select first_name, manager_id
 from employees
 where manager_id = 100 or manager_id = 120 or manager_id = 147;
-
+-- 2. in 연산자 이용
 select first_name, manager_id
 from employees
 where manager_id in (100,120,147);
-
--- 1. 비교 연산자+논리 연산자의 조합
--- 2. in 연산자 이용
 -- 두 쿼리를 비교
+-----------------ORDER BY-------------------------
+
+
+-- 특정 컬럼명, 연산식, 별칭, 컬럼 순서를 기준으로 레코드 정렬
+--asc (오름차순 : default) , desc(내림차순)
+-- 내림차순에 적용할 수 있고 , 로 구분
+
+--부서 번호의오름차순으로 정렬, 부서번호 , 급여, 이름 출력
+select department_id, salary ,first_name
+from employees
+order by department_id asc;
+
+--급여가 10000 이상인 직원 대상, 급여의 내림차순으로 출력. 이름,급여
+select first_name,salary
+from employees
+where salary >=10000
+order by salary desc;
+
+--부서 번호, 급여, 이름순으로 출력. 정렬기준 부서번호 오름차순, 급여 내림차순
+select department_id, salary, first_name
+from employees
+order by department_id asc , salary desc;
+
+--정렬 기준을 어떻게 세우느냐에 따라 출력 결과가 달라진다.
