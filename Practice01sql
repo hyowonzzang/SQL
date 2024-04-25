@@ -28,7 +28,7 @@ select first_name as "이름", salary"월급",to_char(hire_date, 'YYYY-MM') " �
 from employees
 where department_id in(10,90,100);
 
--- 문제7.
+-- 문제7.null
 select first_name as"이름", salary"월급"
 from employees
 where lower(first_name) like '%s%';
@@ -41,6 +41,9 @@ ORDER BY LENGTH(department_name) DESC;
 -- 정확하지 않지만, 지사가 있을 것으로 예상되는 나라들을 나라이름을 대문자로 출력하고 오름차순으로 정렬해보시오,
 
 -- 문제10.
-select first_name, substr(to_char(phone_number, '9999999999'), 1, 3) || '-' ||  hire_date
+select first_name, substr(to_char(phone_number, '999999999999'), 1, 3) || '-' || 
+substr(to_char(phone_number,'99999999999'),4,3) || '-' ||
+substr(to_char(phone_number,'9999999999'),7),hire_date
 from employees
 where hire_date <= '13/12/31';
+-- i dont know ㅠㅠ
