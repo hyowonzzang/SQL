@@ -144,3 +144,111 @@ from employees
 order by department_id asc , salary desc;
 
 --정렬 기준을 어떻게 세우느냐에 따라 출력 결과가 달라진다.
+
+---------------------- 단일행 함수--------------------------
+
+
+-- 단일 레코드를 기준으로 특정 컬럼에 값에 적용되는 함수
+
+-- 문자열 단일행 함수
+select first_name, last_name,
+    concat(first_name, cancat(' ',last_name)), --문자열 연결함수
+    first_name || ' ' || last_name, --문자열 연결 연산
+    inicap(first_name || ' ' || last_name) --각 단어의 첫글자를 대문자로
+from employees;
+
+select first_name, last_name,
+    lower(first_name),  -- 모두 소문자
+    upper(first_name),  --모두 대문자
+    lpad(first_name,20, '*'),   -- 왼쪽 빈 자리 채움
+    rpad(first_name,20, '*')    -- 오른쪽 빈 자리 채움
+    from employees;
+    
+select '   Oracle   ',
+    '*****database*****',
+    ltrim('   Oracle   '),    -- 왼쪽의 빈 공간 삭제
+    rtrim('   Oracle   '),     -- 오른쪽의 빈 공간 삭제
+    trim('*' from'*****database*****'),  -- 앞뒤의 잡음 문자 제거
+    substr('Oracle Database',8,4),
+    substr('Oracle Database'-8,4),
+    length('Oracle Database')   -- 문자열 길이
+from dual;
+
+-- 수치형 단일행 함수
+
+select 3.14159,
+    abs(-3.14), -- 절대값
+    ceil (3.14), -- 올림
+    floor(3.14), -- 버림
+    round(3.5), -- 반올림
+    round(3.14159, 3) -- 소숫점 셋째 자리까지 반올림
+    trunc(3.5), -- 버림
+    trunc(3.14159, 3), -- 소숫점 넷째 자리에서 버림
+    sign(-3.14159), -- 부호 (-1:음수, 0:0, 1:양수)
+    mod(7, 3), -- 7을 3으로 나눈 나머지
+    power(2, 4) -- 2의 4제곱
+from dual;
+
+
+-----------------------
+-- 현재 세션 정보 확인
+select * from nls_session_parameters;
+-- 현재 날짜 포맷이 어떻게 되는가
+-- 딕셔너리를 확인
+select value from nls_session_parameters
+where parameter='NLS_DATE_FORMAT';
+
+select sysdate from employees;
+
+select
+    sysdate
+    add_months(sysdate,2),
+    last_day(sysdate),
+    months_between('12/09/24', sysdate),
+    next_day(sysdate, 7),
+    next_day(sysdate, '일'),
+    round(sysdate, 'month'),
+    trunc(sysdate, 'month')
+from dual;
+
+select first_name, hire_date,
+    round(months_between(sysdate, hire_date)) as 근속월수
+    from employees;
+
+------------------------------
+-- 변환 함수
+------------------------------
+
+-- to_number(sm fmt) : 문자열 -> 숫자
+-- to date(s,fmt) : 문자열 -> 날짜
+-- to char(o, fmt) : 숫자, 날짜 - > 문자열
+
+-- to_char
+
+select first_name,
+    to_char(hire_date,'YYYY-MM-DD HH24:MI:SS')
+from employees;
+
+-- 현재 시간을 년-월-일 시:분:초로 표기
+select sysdate,
+    to_char(sysdate, 'YYYY-MM-DD HH:MI:SS')
+from dual;
+
+select
+    to_char(3000000, ' L999,999,999.99')
+from dual;
+
+-- 모든 직원의 이름과 연봉 정보를 표시
+select
+    first_name, to_char((salary + salary * nvl(commission_pct,0))*12, '$999,999.99') 연봉
+from employees;
+
+-- 문자 -> 숫자 : to_number
+select
+    to_number('$57,600','$999,999') / 12 월급
+from dual;
+
+-- 문자열 -> 날짜
+select '2012-09-24 13:48:00'
+    to_date('2012-09-24 13:48:00','YYYY-MM-DD HH24:MI:SS')
+from dual;
