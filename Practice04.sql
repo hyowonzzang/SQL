@@ -62,7 +62,10 @@ order by sum(e.salary)desc;
 
 
 --문제8.
-select e.employee_id, e.first_name, e.salary, e.hire_date
-from employees e , (select* from employees order by hire_date desc)
-where rownum >= 11 and rownum <= 15;
+select*from(
+select rownum as rn, employee_id, first_name, salary, hire_date
+from (select employee_id, first_name, salary, hire_date
+from employees
+order by hire_date asc))
+where rn >= 11 and rn <= 15;
 
