@@ -344,3 +344,4 @@ FROM employees
 WHERE salary > (SELECT MEDIAN(salary) FROM employees) AND       -- 조건 1
     hire_date > (SELECT hire_date FROM employees WHERE first_name = 'Susan')
 ORDER BY hire_date ASC, salary DESC;
+
