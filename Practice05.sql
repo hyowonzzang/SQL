@@ -31,8 +31,21 @@ from employees e
 join departments d on (e.department_id = d.department_id);
 
 -- 문제5.
-select e.employee_id, e.first_name || ' ' || e.last_name, d.department_name, e.salary, e.hire_date
+select * from(select rownum as rn, e.employee_id, e.first_name || ' ' || e.last_name, d.department_name, e.salary, e.hire_date
 from employees e
 join departments d on(e.department_id = d.department_id)
 where hire_date >='2015/01/01'
-order by hire_date asc;
+order by hire_date asc)
+where rn >=11 and rn <= 20;
+
+-- 문제6.
+select e.first_name || ' ' || e.last_name as "이름", e.salary, d.department_name
+from employees e
+join departments d on e.department_id = d.department_id
+where e.hire_date =(select max(hire_date) from employees);
+
+-- 문제7. *아직 안끝남*
+select e.employee_id, e.first_name || ' ' || e.last_name as "이름", j.job_title, e.salary
+from employees e
+join jobs j on e.job_id = j.job_id
+where avg(salary) = (select avg(salary) from employees); 
