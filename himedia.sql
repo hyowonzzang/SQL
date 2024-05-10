@@ -1,0 +1,11 @@
+TABLE
+CREATE TABLE PHONE_BOOK (
+id NUMBER(10) PRIMARY KEY,
+name VARCHAR2(10),
+hp VARCHAR2(20),
+tel VARCHAR2(20)
+);
+CREATE SEQUENCE phone_book_seq
+START WITH 1
+INCREMENT BY 1;
+select * from phone_book;
